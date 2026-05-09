@@ -1,59 +1,189 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# RestAPI Tasks 📝
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+API REST simples para gerenciamento de tasks, desenvolvida com **Laravel**.  
+Projeto criado com foco em aprendizado de APIs RESTful.
 
-## About Laravel
+---
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## 🚀 Tecnologias
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+- PHP
+- Laravel
+- MySQL
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+---
 
-## Learning Laravel
+## ⚙️ Como rodar localmente
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
+```bash
+# Clone o repositório
+git clone https://github.com/mateusmendesprogrammer17/RestAPI_TASKS.git
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+# Entre na pasta
+cd RestAPI_TASKS
 
-## Laravel Sponsors
+# Instale as dependências
+composer install
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+# Copie o arquivo de ambiente
+cp .env.example .env
 
-### Premium Partners
+# Gere a chave da aplicação
+php artisan key:generate
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+# Configure o banco de dados no .env
+DB_DATABASE=seu_banco
+DB_USERNAME=seu_usuario
+DB_PASSWORD=sua_senha
 
-## Contributing
+# Rode as migrations
+php artisan migrate
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+# Inicie o servidor
+php artisan serve
+```
 
-## Code of Conduct
+Base URL: `http://localhost:8000`
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+---
 
-## Security Vulnerabilities
+## 🧪 Rota de Teste
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+| Método | Rota | Descrição |
+|--------|------|-----------|
+| GET | `/api/test` | Verifica se a API está funcionando |
 
-## License
+**Response:**
+```json
+{
+  "message": "API funcionando!"
+}
+```
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+---
+
+## 📋 Endpoints — Tasks
+
+| Método | Rota | Descrição |
+|--------|------|-----------|
+| GET | `/api/tasks` | Lista todas as tasks |
+| GET | `/api/tasks/{id}` | Busca uma task pelo ID |
+| POST | `/api/tasks` | Cria uma nova task |
+| PUT | `/api/tasks/{id}` | Atualiza uma task completa |
+| DELETE | `/api/tasks/{id}` | Remove uma task |
+
+---
+
+### GET `/api/tasks`
+
+Retorna todas as tasks cadastradas.
+
+**Response 200:**
+```json
+[
+  {
+    "id": 1,
+    "title": "Estudar Laravel",
+    "description": "Aprender a criar APIs REST",
+    "status": "pendente",
+    "created_at": "2025-01-01T00:00:00.000000Z",
+    "updated_at": "2025-01-01T00:00:00.000000Z"
+  }
+]
+```
+
+---
+
+### GET `/api/tasks/{id}`
+
+Retorna uma task específica pelo ID.
+
+**Response 200:**
+```json
+{
+  "id": 1,
+  "title": "Estudar Laravel",
+  "description": "Aprender a criar APIs REST",
+  "status": "pendente",
+  "created_at": "2025-01-01T00:00:00.000000Z",
+  "updated_at": "2025-01-01T00:00:00.000000Z"
+}
+```
+
+---
+
+### POST `/api/tasks`
+
+Cria uma nova task.
+
+**Body:**
+```json
+{
+  "title": "Estudar Flutter",
+  "description": "Aprender a consumir APIs com Dio",
+  "status": "pendente"
+}
+```
+
+**Response 201:**
+```json
+{
+  "id": 2,
+  "title": "Estudar Flutter",
+  "description": "Aprender a consumir APIs com Dio",
+  "status": "pendente",
+  "created_at": "2025-01-01T00:00:00.000000Z",
+  "updated_at": "2025-01-01T00:00:00.000000Z"
+}
+```
+
+---
+
+### PUT `/api/tasks/{id}`
+
+Atualiza completamente uma task existente.
+
+**Body:**
+```json
+{
+  "title": "Estudar Flutter - atualizado",
+  "description": "Finalizar o projeto com Dio",
+  "status": "concluida"
+}
+```
+
+**Response 200:**
+```json
+{
+  "id": 2,
+  "title": "Estudar Flutter - atualizado",
+  "description": "Finalizar o projeto com Dio",
+  "status": "concluida",
+  "created_at": "2025-01-01T00:00:00.000000Z",
+  "updated_at": "2025-01-01T01:00:00.000000Z"
+}
+```
+
+---
+
+### DELETE `/api/tasks/{id}`
+
+Remove uma task pelo ID.
+
+**Response 204:** *(sem conteúdo)*
+
+---
+
+## 📌 Observações
+
+- API sem autenticação — versão de estudo
+- Não há validação dos campos — versão simples intencional
+- Testada no Postman e Hoppscotch
+
+---
+
+## 📚 Próximos passos
+
+- [ ] Adicionar validação dos campos com Form Requests
+- [ ] Adicionar autenticação com Laravel Sanctum
+- [ ] Consumir esta API no Flutter com Dio
